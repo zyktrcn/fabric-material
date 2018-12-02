@@ -66,6 +66,8 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.allocateIPv6(APIstub, args)
 	} else if function == "queryAllAllocation" {
 		return s.queryAllAllocation(APIstub, args)
+	} else if function == "changePrefixHolder" {
+		return s.changePrefixHolder(APIstub, args)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")

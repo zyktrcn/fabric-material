@@ -109,32 +109,20 @@
       </ul>
     </div>
     <div id="body">
-      <div class="form-group">
-        <label>Query a Specific IPv6 Prefix</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: {{query_prefix}}</h5>
 
-        Enter IPv6 prefix: <input id="createName" class="form-control" type="text" placeholder="" ng-model="ipPrefix">
-        <input id="querySubmit" type="submit" value="Query" placeholder="2000:12::/64" class="btn btn-primary" ng-click="queryPrefix()">
+      <div class="form-group">
+        <label>Create IPv6 Prefix Allocation</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! </h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_create">Error: {{allocate_prefix}}</h5>
+        <br>
+        Enter IPv6_prefix: <input class="form-control" type="text" placeholder="2000:12::/64" ng-model="prefix.IPv6_prefix">
+        Enter AS_number: <input class="form-control" type="text" ng-model="prefix.AS_number">
+        Enter Assign_by: <input class="form-control" type="text" ng-model="prefix.Assign_by">
+        Enter Assign_to: <input class="form-control" type="text" ng-model="prefix.Assign_to">
+        Enter Advertisement: <input class="form-control" type="text" ng-model="prefix.Advertisement">
+        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="allocatePrefix()">
       </div>
 
-      <table id="query_prefix" class="table" align="center">
-
-        <tr>
-          <th>AS_number</th>
-          <th>Assign_by</th>
-          <th>Assign_to</th>
-          <th>IPv6_prefix</th>
-          <th>Advertisement</th>
-        </tr>
-
-        <tr>
-          <td>{{query_prefix.AS_number}}</td>
-          <td>{{query_prefix.Assign_by}}</td>
-          <td>{{query_prefix.Assign_to}}</td>
-          <td>{{query_prefix.IPv6_prefix}}</td>
-          <td>{{query_prefix.Advertisement}}</td>
-        </tr>
-      </table>
     </div>
   </body>
     <!-- requiring the angular page -->

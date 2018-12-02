@@ -12,6 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
 
+    <!-- adding style here -->
     <style type="text/css">
       header{
         background-color: lightgray;
@@ -83,8 +84,8 @@
         color: white;
       }
     </style>
-    </head>
-    <body ng-app="application" ng-controller="appController">
+  </head>
+  <body ng-app="application" ng-controller="appController">
     <header>
       <div id="left_header">IPv6 Allocation Application</div>
       <div class="logo">
@@ -110,31 +111,14 @@
     </div>
     <div id="body">
       <div class="form-group">
-        <label>Query a Specific IPv6 Prefix</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: {{query_prefix}}</h5>
-
-        Enter IPv6 prefix: <input id="createName" class="form-control" type="text" placeholder="" ng-model="ipPrefix">
-        <input id="querySubmit" type="submit" value="Query" placeholder="2000:12::/64" class="btn btn-primary" ng-click="queryPrefix()">
+        <label>Change IPv6 Prefix Holder</label><br>
+        <h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_holder}}</h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_holder">Error: Please enter prefix </h5>
+        Enter prefix: <input class="form-control" name="assetSelect" ng-model="holder.prefix">
+        Enter name of new holder: <input class="form-control" name="assetSelect" ng-model="holder.assignTo">
+        <input id="transferSubmit" type="submit" value="Change" class="btn btn-primary" ng-click="changeHolder()">
       </div>
 
-      <table id="query_prefix" class="table" align="center">
-
-        <tr>
-          <th>AS_number</th>
-          <th>Assign_by</th>
-          <th>Assign_to</th>
-          <th>IPv6_prefix</th>
-          <th>Advertisement</th>
-        </tr>
-
-        <tr>
-          <td>{{query_prefix.AS_number}}</td>
-          <td>{{query_prefix.Assign_by}}</td>
-          <td>{{query_prefix.Assign_to}}</td>
-          <td>{{query_prefix.IPv6_prefix}}</td>
-          <td>{{query_prefix.Advertisement}}</td>
-        </tr>
-      </table>
     </div>
   </body>
     <!-- requiring the angular page -->
