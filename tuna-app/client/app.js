@@ -67,13 +67,13 @@ app.controller('appController', function($scope, appFactory){
 		console.log($scope.holder)
 		appFactory.changeHolder($scope.holder, function(data){
 			$scope.change_holder = data;
-			if ($scope.change_holder == "Error: no prefix found"){
-				$("#error_holder").show();
-				$("#success_holder").hide();
-			} else{
-				$("#success_holder").show();
-				$("#error_holder").hide();
-			}
+			// if ($scope.change_holder == "Error: no prefix found"){
+			// 	$("#error_holder").show();
+			// 	$("#success_holder").hide();
+			// } else{
+			// 	$("#success_holder").show();
+			// 	$("#error_holder").hide();
+			// }
 		});
 	}
 
