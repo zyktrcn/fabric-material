@@ -105,7 +105,7 @@ app.factory('appFactory', function($http){
 	factory.allocatePrefix = function(data, callback){
 
 		var ipPrefx = data.IPv6_prefix.replace('/', '@');
-		var prefix = ipPrefx + "-" + data.AS_number + "-" + data.Assign_by + "-" + data.Assign_to + "-" + data.Advertisement;
+		var prefix = ipPrefx + "-" + data.AS_number + "-" + data.Assign_by + "-" + data.Assign_to + "-" + data.Advertisement + "-" + new Date().getTime();
     	$http.get('/allocate_prefix/'+prefix).success(function(output){
 			callback(output)
 		});
@@ -113,7 +113,7 @@ app.factory('appFactory', function($http){
 
 	factory.changeHolder = function(data, callback){
 
-		var holder = data.prefix.replace('/', '@') + "-" + data.assignTo;
+		var holder = data.prefix.replace('/', '@') + "-" + data.assignTo + "-" + new Date().getTime();
 
     	$http.get('/change_holder/'+holder).success(function(output){
 			callback(output)

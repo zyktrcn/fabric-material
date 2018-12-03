@@ -100,6 +100,7 @@ return{
 		var Assign_by = array[2]
 		var Assign_to = array[3]
 		var Advertisement = array[4]
+		var Timestamp = array[5]
 
 
 		var fabric_client = new Fabric_Client();
@@ -142,13 +143,13 @@ return{
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-		    // recordTuna - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'], 
+		    // recordTuna - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'],
 		    // send proposal to endorser
 		    const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
 		        chaincodeId: 'tuna-app',
 		        fcn: 'allocateIPv6',
-		        args: [IPv6_address, AS_number, Assign_by, Assign_to, Advertisement],
+		        args: [IPv6_address, AS_number, Assign_by, Assign_to, Advertisement, Timestamp],
 		        chainId: 'mychannel',
 		        txId: tx_id
 		    };
@@ -303,7 +304,7 @@ return{
 		        if (query_responses[0] instanceof Error) {
 		            console.error("error from query = ", query_responses[0]);
 		            res.send("Could not query prefix")
-		            
+
 		        } else {
 		            console.log("Response is ", query_responses[0].toString());
 		            res.send(query_responses[0].toString())
@@ -323,6 +324,7 @@ return{
 		var array = req.params.holder.split("-");
 		var key = array[0].replace('@', '/');
 		var holder = array[1];
+		var Timestamp = array[2];
 
 		var fabric_client = new Fabric_Client();
 
@@ -370,7 +372,7 @@ return{
 		        //targets : --- letting this default to the peers assigned to the channel
 		        chaincodeId: 'tuna-app',
 		        fcn: 'changePrefixHolder',
-		        args: [key, holder],
+		        args: [key, holder, Timestamp],
 		        chainId: 'mychannel',
 		        txId: tx_id
 		    };

@@ -8,11 +8,11 @@
 
 package main
 
-/* Imports  
-* 4 utility libraries for handling bytes, reading and writing JSON, 
-formatting, and string manipulation  
-* 2 specific Hyperledger Fabric specific libraries for Smart Contracts  
-*/ 
+/* Imports
+* 4 utility libraries for handling bytes, reading and writing JSON,
+formatting, and string manipulation
+* 2 specific Hyperledger Fabric specific libraries for Smart Contracts
+*/
 import (
 	"bytes"
 	"encoding/json"
@@ -27,21 +27,22 @@ import (
 type SmartContract struct {
 }
 
-/* Define Tuna structure, with 4 properties.  
+/* Define Tuna structure, with 4 properties.
 Structure tags are used by encoding/json library
 */
 type IPv6 struct {
-    AS_number       string   `json:"AS_number"` 
-    Assign_by       string   `json:"Assign_by"` 
+    AS_number       string   `json:"AS_number"`
+    Assign_by       string   `json:"Assign_by"`
     Assign_to       string   `json:"Assign_to"`
     IPv6_prefix    string   `json:"IPv6_prefix"`
     Advertisement   string   `json:"Advertisement"`
+    Timestamp   string   `json:"Timestamp"`
 }
 
 /*
  * The Init method *
  called when the Smart Contract "tuna-chaincode" is instantiated by the network
- * Best practice is to have any Ledger initialization in separate function 
+ * Best practice is to have any Ledger initialization in separate function
  -- see initLedger()
  */
 func (s *SmartContract) Init(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -98,15 +99,15 @@ Will add test data (10 tuna catches)to our network
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	ips := []IPv6{
-		IPv6{IPv6_prefix: "testAddress1", AS_number: "ASNUMBER1", Assign_by: "admin", Assign_to: "testUser1", Advertisement: "empty"},
-		IPv6{IPv6_prefix: "testAddress2", AS_number: "ASNUMBER2", Assign_by: "admin", Assign_to: "testUser2", Advertisement: "empty"},
-		IPv6{IPv6_prefix: "testAddress3", AS_number: "ASNUMBER3", Assign_by: "admin", Assign_to: "testUser3", Advertisement: "empty"},
-		IPv6{IPv6_prefix: "testAddress4", AS_number: "ASNUMBER4", Assign_by: "admin", Assign_to: "testUser4", Advertisement: "empty"},
-		IPv6{IPv6_prefix: "testAddress5", AS_number: "ASNUMBER5", Assign_by: "admin", Assign_to: "testUser5", Advertisement: "empty"},
-		IPv6{IPv6_prefix: "testAddress6", AS_number: "ASNUMBER6", Assign_by: "admin", Assign_to: "testUser6", Advertisement: "empty"},
-		IPv6{IPv6_prefix: "testAddress7", AS_number: "ASNUMBER7", Assign_by: "admin", Assign_to: "testUser7", Advertisement: "empty"},
-		IPv6{IPv6_prefix: "testAddress8", AS_number: "ASNUMBER8", Assign_by: "admin", Assign_to: "testUser8", Advertisement: "empty"},
-		IPv6{IPv6_prefix: "testAddress9", AS_number: "ASNUMBER9", Assign_by: "admin", Assign_to: "testUser9", Advertisement: "empty"},
+		IPv6{IPv6_prefix: "testAddress1", AS_number: "ASNUMBER1", Assign_by: "admin", Assign_to: "testUser1", Advertisement: "empty", Timestamp: "1543803219165"},
+		IPv6{IPv6_prefix: "testAddress2", AS_number: "ASNUMBER2", Assign_by: "admin", Assign_to: "testUser2", Advertisement: "empty", Timestamp: "1543803219165"},
+		IPv6{IPv6_prefix: "testAddress3", AS_number: "ASNUMBER3", Assign_by: "admin", Assign_to: "testUser3", Advertisement: "empty", Timestamp: "1543803219165"},
+		IPv6{IPv6_prefix: "testAddress4", AS_number: "ASNUMBER4", Assign_by: "admin", Assign_to: "testUser4", Advertisement: "empty", Timestamp: "1543803219165"},
+		IPv6{IPv6_prefix: "testAddress5", AS_number: "ASNUMBER5", Assign_by: "admin", Assign_to: "testUser5", Advertisement: "empty", Timestamp: "1543803219165"},
+		IPv6{IPv6_prefix: "testAddress6", AS_number: "ASNUMBER6", Assign_by: "admin", Assign_to: "testUser6", Advertisement: "empty", Timestamp: "1543803219165"},
+		IPv6{IPv6_prefix: "testAddress7", AS_number: "ASNUMBER7", Assign_by: "admin", Assign_to: "testUser7", Advertisement: "empty", Timestamp: "1543803219165"},
+		IPv6{IPv6_prefix: "testAddress8", AS_number: "ASNUMBER8", Assign_by: "admin", Assign_to: "testUser8", Advertisement: "empty", Timestamp: "1543803219165"},
+		IPv6{IPv6_prefix: "testAddress9", AS_number: "ASNUMBER9", Assign_by: "admin", Assign_to: "testUser9", Advertisement: "empty", Timestamp: "1543803219165"},
 	}
 
 	i := 0
@@ -123,13 +124,13 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 
 /*
  * The allocateIPv6 method *
-Fisherman like Sarah would use to record each of her tuna catches. 
-This method takes in five arguments (attributes to be saved in the ledger). 
+Fisherman like Sarah would use to record each of her tuna catches.
+This method takes in five arguments (attributes to be saved in the ledger).
  */
 func (s *SmartContract) allocateIPv6(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 5 {
-		return shim.Error("Incorrect number of arguments. Expecting 5")
+	if len(args) != 6 {
+		return shim.Error("Incorrect number of arguments. Expecting 6")
 	}
 
 	ipAsBytes, _ := APIstub.GetState(args[0])
@@ -137,7 +138,7 @@ func (s *SmartContract) allocateIPv6(APIstub shim.ChaincodeStubInterface, args [
 		return shim.Error("Could not allocate this IPv6 prefix")
 	}
 
-	var allocation = IPv6{IPv6_prefix: args[0], AS_number: args[1], Assign_by: args[2], Assign_to: args[3], Advertisement: args[4]}
+	var allocation = IPv6{IPv6_prefix: args[0], AS_number: args[1], Assign_by: args[2], Assign_to: args[3], Advertisement: args[4], Timestamp: args[5]}
 
 	ipAsBytes, _ = json.Marshal(allocation)
 	err := APIstub.PutState(args[0], ipAsBytes)
@@ -151,7 +152,7 @@ func (s *SmartContract) allocateIPv6(APIstub shim.ChaincodeStubInterface, args [
 /*
  * The queryAllAllocation method *
 allows for assessing all the records added to the ledger(all tuna catches)
-This method does not take any arguments. Returns JSON string containing results. 
+This method does not take any arguments. Returns JSON string containing results.
  */
 func (s *SmartContract) queryAllAllocation(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
@@ -203,13 +204,13 @@ func (s *SmartContract) queryAllAllocation(APIstub shim.ChaincodeStubInterface, 
 
 /*
  * The changeTunaHolder method *
-The data in the world state can be updated with who has possession. 
-This function takes in 2 arguments, tuna id and new holder name. 
+The data in the world state can be updated with who has possession.
+This function takes in 2 arguments, tuna id and new holder name.
  */
 func (s *SmartContract) changePrefixHolder(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 2 {
-		return shim.Error("Incorrect number of arguments. Expecting 2")
+	if len(args) != 3 {
+		return shim.Error("Incorrect number of arguments. Expecting 3")
 	}
 
 	prefixAsBytes, _ := APIstub.GetState(args[0])
@@ -222,6 +223,7 @@ func (s *SmartContract) changePrefixHolder(APIstub shim.ChaincodeStubInterface, 
 	// Normally check that the specified argument is a valid holder of prefix
 	// we are skipping this check for this example
 	prefix.Assign_to = args[1]
+	prefix.Timestamp = args[2]
 
 	prefixAsBytes, _ = json.Marshal(prefix)
 	err := APIstub.PutState(args[0], prefixAsBytes)
@@ -235,7 +237,7 @@ func (s *SmartContract) changePrefixHolder(APIstub shim.ChaincodeStubInterface, 
 
 /*
  * main function *
-calls the Start function 
+calls the Start function
 The main function starts the chaincode in the container during instantiation.
  */
 func main() {
