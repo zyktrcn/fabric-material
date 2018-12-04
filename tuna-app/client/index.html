@@ -76,10 +76,22 @@
       .nav li {
         list-style: none;
         float: left;
-        width: 25%;
+        width: 20%;
         height: 100%;
         background-color: #337ab7;
         color: white;
+      }
+      p {
+        text-indent: 2rem;
+      }
+      .intro {
+        position: absolute;
+        top: 10px;
+        left: 300px;
+        width: 400px;
+      }
+      #body {
+        position: relative;
       }
     </style>
     </head>
@@ -95,9 +107,12 @@
     <div class="nav">
       <ul>
         <a href="index.html">
-          <li>Query</li>
+          <li>Document</li>
         </a>
         <a href="query.html">
+          <li>Query</li>
+        </a>
+        <a href="queryAll.html">
           <li>Query All</li>
         </a>
         <a href="allocation.html">
@@ -109,34 +124,23 @@
       </ul>
     </div>
     <div id="body">
-      <div class="form-group">
-        <label>Query a Specific IPv6 Prefix</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: {{query_prefix}}</h5>
-
-        Enter IPv6 prefix: <input id="createName" class="form-control" type="text" placeholder="" ng-model="ipPrefix">
-        <input id="querySubmit" type="submit" value="Query" placeholder="2000:12::/64" class="btn btn-primary" ng-click="queryPrefix()">
-      </div>
-
-      <table id="query_prefix" class="table" align="center">
-
-        <tr>
-          <th>AS_number</th>
-          <th>Assign_by</th>
-          <th>Assign_to</th>
-          <th>IPv6_prefix</th>
-          <th>Advertisement</th>
-          <th>Timestamp</th>
-        </tr>
-
-        <tr>
-          <td>{{query_prefix.AS_number}}</td>
-          <td>{{query_prefix.Assign_by}}</td>
-          <td>{{query_prefix.Assign_to}}</td>
-          <td>{{query_prefix.IPv6_prefix}}</td>
-          <td>{{query_prefix.Advertisement}}</td>
-          <td>{{query_prefix.Timestamp}}</td>
-        </tr>
-      </table>
+      <h4>Query</h4>
+      <p>
+        查询IPv6前缀分配情况
+      </p>
+      <h4>Query All</h4>
+      <p>
+        查询全部IPv6前缀分配情况
+      </p>
+      <h4>Allocation</h4>
+      <p>
+        分配IPv6前缀
+      </p>
+      <h4>Change Holder</h4>
+      <p>
+        修改IPv6前缀分配
+      </p>
+      <img src="./system.png" class="intro" />
     </div>
   </body>
     <script type="text/javascript" src="app.js"> </script>
