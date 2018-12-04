@@ -160,8 +160,8 @@ func (s *SmartContract) queryAllAllocation(APIstub shim.ChaincodeStubInterface, 
 
 func (s *SmartContract) changePrefixHolder(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 3 {
-		return shim.Error("Incorrect number of arguments. Expecting 3")
+	if len(args) != 4 {
+		return shim.Error("Incorrect number of arguments. Expecting 4")
 	}
 
 	prefixAsBytes, _ := APIstub.GetState(args[0])
@@ -172,8 +172,9 @@ func (s *SmartContract) changePrefixHolder(APIstub shim.ChaincodeStubInterface, 
 
 	json.Unmarshal(prefixAsBytes, &prefix)
 
-	prefix.Assign_to = args[1]
-	prefix.Timestamp = args[2]
+	prefix.AS_number = args[1]
+	prefix.Assign_to = args[2]
+	prefix.Timestamp = args[3]
 
 	prefixAsBytes, _ = json.Marshal(prefix)
 	err := APIstub.PutState(args[0], prefixAsBytes)

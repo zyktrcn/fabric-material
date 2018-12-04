@@ -11,7 +11,7 @@ app.controller('appController', function($scope, appFactory){
 	$("#error_holder").hide();
 	$("#error_query").hide();
 	$("#error_create").hide();
-	
+
 	$scope.queryAllPrfixes = function(){
 
 		var prefixes = $scope.prefixes;
@@ -72,7 +72,7 @@ app.controller('appController', function($scope, appFactory){
 });
 
 app.factory('appFactory', function($http){
-	
+
 	var factory = {};
 
     factory.queryAllPrfixes = function(data, callback){
@@ -104,7 +104,7 @@ app.factory('appFactory', function($http){
 
 	factory.changeHolder = function(data, callback){
 
-		var holder = data.prefix.replace('/', '@') + "-" + data.assignTo + "-" + new Date().getTime();
+		var holder = data.prefix.replace('/', '@') + "-" + data.asNumber + "-" + data.assignTo + "-" + new Date().getTime();
 
     	$http.get('/change_holder/'+holder).success(function(output){
 			callback(output)

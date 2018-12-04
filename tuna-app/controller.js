@@ -1,6 +1,6 @@
 
-var express       = require('express');        
-var app           = express();                 
+var express       = require('express');
+var app           = express();
 var bodyParser    = require('body-parser');
 var http          = require('http')
 var fs            = require('fs');
@@ -148,11 +148,11 @@ return{
 		            proposal: proposal
 		        };
 
-		        var transaction_id_string = tx_id.getTransactionID(); 
+		        var transaction_id_string = tx_id.getTransactionID();
 		        var promises = [];
 
 		        var sendPromise = channel.sendTransaction(request);
-		        promises.push(sendPromise); 
+		        promises.push(sendPromise);
 
 		        let event_hub = fabric_client.newEventHub();
 		        event_hub.setPeerAddr('grpc://localhost:7053');
@@ -160,11 +160,11 @@ return{
 		        let txPromise = new Promise((resolve, reject) => {
 		            let handle = setTimeout(() => {
 		                event_hub.disconnect();
-		                resolve({event_status : 'TIMEOUT'}); 
+		                resolve({event_status : 'TIMEOUT'});
 		            }, 3000);
 		            event_hub.connect();
 		            event_hub.registerTxEvent(transaction_id_string, (tx, code) => {
-		                
+
 		                clearTimeout(handle);
 		                event_hub.unregisterTxEvent(transaction_id_string);
 		                event_hub.disconnect();
@@ -172,7 +172,7 @@ return{
 		                var return_status = {event_status : code, tx_id : transaction_id_string};
 		                if (code !== 'VALID') {
 		                    console.error('The transaction was invalid, code = ' + code);
-		                    resolve(return_status); 
+		                    resolve(return_status);
 		                } else {
 		                    console.log('The transaction has been committed on peer ' + event_hub._ep._endpoint.addr);
 		                    resolve(return_status);
@@ -271,8 +271,9 @@ return{
 
 		var array = req.params.holder.split("-");
 		var key = array[0].replace('@', '/');
-		var holder = array[1];
-		var Timestamp = array[2];
+		var asNumber = array[1];
+		var holder = array[2];
+		var Timestamp = array[3];
 
 		var fabric_client = new Fabric_Client();
 
@@ -310,7 +311,7 @@ return{
 		    var request = {
 		        chaincodeId: 'tuna-app',
 		        fcn: 'changePrefixHolder',
-		        args: [key, holder, Timestamp],
+		        args: [key, asNumber, holder, Timestamp],
 		        chainId: 'mychannel',
 		        txId: tx_id
 		    };
@@ -337,11 +338,11 @@ return{
 		            proposal: proposal
 		        };
 
-		        var transaction_id_string = tx_id.getTransactionID(); 
+		        var transaction_id_string = tx_id.getTransactionID();
 		        var promises = [];
 
 		        var sendPromise = channel.sendTransaction(request);
-		        promises.push(sendPromise); 
+		        promises.push(sendPromise);
 
 		        let event_hub = fabric_client.newEventHub();
 		        event_hub.setPeerAddr('grpc://localhost:7053');
@@ -349,11 +350,11 @@ return{
 		        let txPromise = new Promise((resolve, reject) => {
 		            let handle = setTimeout(() => {
 		                event_hub.disconnect();
-		                resolve({event_status : 'TIMEOUT'}); 
+		                resolve({event_status : 'TIMEOUT'});
 		            }, 3000);
 		            event_hub.connect();
 		            event_hub.registerTxEvent(transaction_id_string, (tx, code) => {
-		                
+
 		                clearTimeout(handle);
 		                event_hub.unregisterTxEvent(transaction_id_string);
 		                event_hub.disconnect();
@@ -361,7 +362,7 @@ return{
 		                var return_status = {event_status : code, tx_id : transaction_id_string};
 		                if (code !== 'VALID') {
 		                    console.error('The transaction was invalid, code = ' + code);
-		                    resolve(return_status); 
+		                    resolve(return_status);
 		                } else {
 		                    console.log('The transaction has been committed on peer ' + event_hub._ep._endpoint.addr);
 		                    resolve(return_status);
