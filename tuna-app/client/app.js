@@ -1,10 +1,9 @@
-// SPDX-License-Identifier: Apache-2.0
 
 'use strict';
 
 var app = angular.module('application', []);
 
-// Angular Controller
+
 app.controller('appController', function($scope, appFactory){
 
 	$("#success_holder").hide();
@@ -67,19 +66,11 @@ app.controller('appController', function($scope, appFactory){
 		console.log($scope.holder)
 		appFactory.changeHolder($scope.holder, function(data){
 			$scope.change_holder = data;
-			// if ($scope.change_holder == "Error: no prefix found"){
-			// 	$("#error_holder").show();
-			// 	$("#success_holder").hide();
-			// } else{
-			// 	$("#success_holder").show();
-			// 	$("#error_holder").hide();
-			// }
 		});
 	}
 
 });
 
-// Angular Factory
 app.factory('appFactory', function($http){
 	
 	var factory = {};
