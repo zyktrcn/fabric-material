@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -113,34 +112,34 @@
     </div>
     <div id="body">
       <div class="form-group">
-        <label>Query a Specific IPv6 Prefix</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: {{query_prefix}}</h5>
-
-        Enter IPv6 prefix: <input id="createName" class="form-control" type="text" placeholder="" ng-model="ipPrefix">
-        <input id="querySubmit" type="submit" value="Query" placeholder="2000:12::/64" class="btn btn-primary" ng-click="queryPrefix()">
+        <label>Query All IPv6 Prefixes</label>
+        Enter IPv6_prefix startKey: <input class="form-control" type="text" placeholder="2000:12::/64" ng-model="prefixes.startKey">
+        Enter IPv6_prefix endKey: <input class="form-control" type="text" placeholder="2000:12::/64" ng-model="prefixes.endKey">
+        <p><input id="queryAllPrfixes" type="submit" value="Query" class="btn btn-primary" ng-click="queryAllPrfixes()"></p>
       </div>
 
-      <table id="query_prefix" class="table" align="center">
+      <table id="all_prefixes" class="table" align="center">
 
         <tr>
+          <th>IPv6_prefix</th>
           <th>AS_number</th>
           <th>Assign_by</th>
           <th>Assign_to</th>
-          <th>IPv6_prefix</th>
           <th>Advertisement</th>
           <th>Timestamp</th>
         </tr>
 
-        <tr>
-          <td>{{query_prefix.AS_number}}</td>
-          <td>{{query_prefix.Assign_by}}</td>
-          <td>{{query_prefix.Assign_to}}</td>
-          <td>{{query_prefix.IPv6_prefix}}</td>
-          <td>{{query_prefix.Advertisement}}</td>
-          <td>{{query_prefix.Timestamp}}</td>
+        <tr ng-repeat="prefix in all_prefixes">
+          <td>{{prefix.IPv6_prefix}}</td>
+          <td>{{prefix.AS_number}}</td>
+          <td>{{prefix.Assign_by}}</td>
+          <td>{{prefix.Assign_to}}</td>
+          <td>{{prefix.Advertisement}}</td>
+          <td>{{prefix.Timestamp}}</td>
         </tr>
       </table>
     </div>
   </body>
+    <!-- requiring the angular page -->
     <script type="text/javascript" src="app.js"> </script>
 </html>
